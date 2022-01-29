@@ -1,4 +1,4 @@
-import GHC.List
+import Data.List
 
 myLength :: [a] -> Int
 myLength [] = 0

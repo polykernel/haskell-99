@@ -1,7 +1,7 @@
-import qualified GHC.List as List
+import Data.List
 
 isPalindrome :: Eq a => [a] -> Bool
-isPalindrome xs = List.and . take (List.length xs `div` 2) $ zipWith (==) xs (reverse xs)
+isPalindrome xs = and . take (length xs `div` 2) $ zipWith (==) xs (reverse xs)
 
 main :: IO ()
 main =
