@@ -1,17 +1,16 @@
-import Data.Maybe
+groupBy :: (a -> a -> Bool) -> [a] -> [[a]]
+groupBy _ [] = []
+groupBy p (x : xs) =
+  let
+    go :: (a -> a -> Bool) -> [a] -> [a] -> [[a]]
+    go _ acc [] = [acc]
+    go p acc (y : ys)
+      | p y (head acc) = go p (y : acc) ys
+      | otherwise = acc : (go p [y] ys)
+  in go p [x] xs
 
 encode :: Eq a => [a] -> [(Int, a)]
-encode [] = []
-encode xs = 
-  let
-    encode' :: Eq a => (Int, Maybe a) -> [a] -> [(Int, a)]
-    encode' (len, a) [] = [(len, fromJust a)]
-    encode' (0, _) (x : xs) = encode' (1, Just x) xs
-    encode' acc@(len, a) y@(x : xs)
-      | x == fromJust a = encode' (len + 1, a) xs
-      | otherwise = (len, fromJust a) : (encode' (0, Nothing) y)
-  in encode' (0, Nothing) xs
-
+encode = map (\xs -> (length xs, head xs)) . groupBy (==)
 
 main :: IO ()
 main =

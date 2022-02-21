@@ -1,4 +1,4 @@
-data Occurence a = Multiple Int a | Single a
+data Occurence a = Multiple Int a | Single a deriving Show
 
 decodeModified :: [Occurence a] -> [a]
 decodeModified =

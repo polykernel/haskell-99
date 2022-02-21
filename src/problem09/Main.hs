@@ -1,15 +1,16 @@
-pack :: Eq a => [a] -> [[a]]
-pack [] = []
-pack xs =
+groupBy :: (a -> a -> Bool) -> [a] -> [[a]]
+groupBy _ [] = []
+groupBy p (x : xs) =
   let
-    pack' :: Eq a => [a] -> [a] -> [[a]]
-    pack' acc [] = [acc]
-    pack' [] (x : xs) = pack' [x] xs
-    pack' acc y@(x : xs)
-      | x == head acc = pack' (x : acc) xs
-      | otherwise = acc : (pack' [] y)
-  in pack' [] xs
+    go :: (a -> a -> Bool) -> [a] -> [a] -> [[a]]
+    go _ acc [] = [acc]
+    go p acc (y : ys)
+      | p y (head acc) = go p (y : acc) ys
+      | otherwise = acc : (go p [y] ys)
+  in go p [x] xs
 
+pack :: Eq a => [a] -> [[a]]
+pack = groupBy (==)
 
 main :: IO ()
 main =
