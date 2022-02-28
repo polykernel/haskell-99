@@ -3,6 +3,7 @@ data Occurence a = Multiple Int a | Single a deriving Show
 decodeModified :: [Occurence a] -> [a]
 decodeModified =
   let
+    decodeModified' :: [a] -> [Occurence a] -> [a]
     decodeModified' acc [] = acc
     decodeModified' acc (x : xs) =
       case x of
@@ -13,5 +14,4 @@ decodeModified =
 
 main :: IO ()
 main =
-  print (decodeModified [Multiple 4 'a',Single 'b',Multiple 2 'c',
-        Multiple 2 'a',Single 'd',Multiple 4 'e'])
+  print (decodeModified [Multiple 4 'a',Single 'b',Multiple 2 'c', Multiple 2 'a',Single 'd',Multiple 4 'e'])

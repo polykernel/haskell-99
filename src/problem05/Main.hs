@@ -1,6 +1,7 @@
 myReverse :: [a] -> [a]
 myReverse =
   let
+    reverse' :: [a] -> [a] -> [a]
     reverse' xs [] = xs
     reverse' xs (y : ys) = reverse' (y : xs) ys
   in reverse' []
